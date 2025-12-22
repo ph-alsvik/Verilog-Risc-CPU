@@ -1,24 +1,4 @@
 
-module op_select(
-	input [15:0] ze_res,
-	input [15:0] cla_res,
-	input [15:0] or_res,
-	input [15:0] and_res,
-	input [1:0] sel,
-	output [15:0] Y 
-);
-
-	always @ (ze_res, cla_res, or_res, and_res, sel) begin
-		case(sel)
-			2'b00 	: Y = and_res;
-			2'b01 	: Y = or_res;
-			2'b10 	: Y = cla_res;
-			default : Y = ze_res;
-		endcase	
-	end	
-
-endmodule
-
 module alu (
 	input [15:0] A,
 	input [15:0] B,
@@ -43,7 +23,7 @@ module alu (
 		.A(B_inv),
 		.B(B),
 		.F(F[2]),
-		.Y(Y)
+		.Y(Y_multiplex)
 	);
 
 	cla c0 (
@@ -66,8 +46,8 @@ module alu (
 		.Y(and_res)
 	);
 
-	zero_extend (
-		.sign_bit(cla_output[15]),
+	zero_extend ze0 (
+		.sign_bit(cla_res[15]),
 		.extended_sign(ze_res)
 	);
 
@@ -75,7 +55,9 @@ module alu (
 		.ze_res(ze_res),
 		.cla_res(cla_res),
 		.or_res(or_res),
-		.and_res(and_res)
-	);	
+		.and_res(and_res),
+		.sel(F[1:0]),
+		.Y(Y)
+	);
 
 endmodule

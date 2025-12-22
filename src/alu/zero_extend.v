@@ -3,6 +3,6 @@ module zero_extend (
 	output [15:0] extended_sign
 );
 
-	extended_sign = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, sign_bit}
+	assign extended_sign = {1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, sign_bit};
 
 endmodule
